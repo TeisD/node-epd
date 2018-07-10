@@ -1,16 +1,5 @@
 #include "epd_driver.h"
 
-using Nan::AsyncQueueWorker;
-using Nan::AsyncWorker;
-using Nan::Callback;
-using Nan::HandleScope;
-using Nan::Null;
-
-using v8::Local;
-using v8::Value;
-using v8::Function;  
-using v8::FunctionTemplate;
-
 #define DRIVER_OUTPUT_CMD		0x01
 #define BOSTER_SOFT_START_CMD 	0x0c
 #define DEEP_SLEEP_MODE_CMD		0x10

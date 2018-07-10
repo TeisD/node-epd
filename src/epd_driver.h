@@ -6,9 +6,6 @@
 #include <stdint.h>
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
-#include <nan.h>
-#include <v8.h>
-
 
 #define EPD2X9 1
 #ifdef EPD2X9
