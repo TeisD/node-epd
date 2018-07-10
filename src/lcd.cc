@@ -114,11 +114,11 @@ NAN_METHOD(EpdLcd::New)
 {
     Nan::HandleScope scope;
 
-    uint8_t led = info[1]->IsUndefined() ? 127 : info[0]->NumberValue();
-    uint8_t ch = info[1]->IsUndefined() ? 0 : info[1]->NumberValue();
-    uint8_t dc = info[2]->IsUndefined() ? 25 : info[2]->NumberValue();
-    uint8_t cs = info[3]->IsUndefined() ? 8 : info[3]->NumberValue();
-    uint8_t rst = info[4]->IsUndefined() ? 17 : info[4]->NumberValue();
+    uint8_t ch = info[0]->IsUndefined() ? 0 : info[0]->NumberValue();
+    uint8_t dc = info[1]->IsUndefined() ? 25 : info[1]->NumberValue();
+    uint8_t cs = info[2]->IsUndefined() ? 8 : info[2]->NumberValue();
+    uint8_t rst = info[3]->IsUndefined() ? 17 : info[3]->NumberValue();
+    uint8_t led = info[4]->IsUndefined() ? 127 : info[4]->NumberValue();
 
     EpdLcd *obj = new EpdLcd(ch, dc, cs, rst, led);
     obj->_led = led;
