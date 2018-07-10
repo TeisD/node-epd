@@ -7,7 +7,7 @@
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 
-#define EPD2X9 1
+#define EPD02X13 1
 #ifdef EPD2X9
 	#define LCDWIDTH 296
 	#define LCDHEIGHT 128
