@@ -13,8 +13,6 @@ using Nan::Callback;
 
 Nan::Persistent<Function> EpdLcd::constructor;
 
-#define enablePartialUpdate
-
 static unsigned char lcd_buff[LCDHEIGHT * LCDWIDTH * 8];
 
 #ifdef enablePartialUpdate
@@ -194,13 +192,13 @@ NAN_METHOD(EpdLcd::ClearPart)
 NAN_METHOD(EpdLcd::Update)
 {
     Nan::HandleScope scope;
-    #ifdef enablePartialUpdate
+#ifdef enablePartialUpdate
         changed = false;
         xUpdateMin = LCDWIDTH - 1;
         xUpdateMax = 0;
         yUpdateMin = LCDHEIGHT-1;
         yUpdateMax = 0;
-    #endif
+#endif
     if (info[0]->IsUndefined()) {
         Dis_full_pic((unsigned char *)lcd_buff);
     } else {
@@ -230,13 +228,13 @@ void DisClearFullWorker::HandleOKCallback()
 
 void DisUpdateFullWorker::Execute()
 {
-    #ifdef enablePartialUpdate
+#ifdef enablePartialUpdate
     changed = false;
     xUpdateMin = LCDWIDTH - 1;
     xUpdateMax = 0;
     yUpdateMin = LCDHEIGHT-1;
     yUpdateMax = 0;
-    #endif
+#endif
     Dis_full_pic((unsigned char *)lcd_buff);
     driver_delay_xms(DELAYTIME); 
 };
@@ -252,6 +250,7 @@ void DisUpdateFullWorker::HandleOKCallback()
 }
 
 bool updateScreenPart() {
+#ifdef enablePartialUpdate
     if (!changed) {
          return false;
     }
@@ -273,13 +272,12 @@ bool updateScreenPart() {
         j += h/8;
     }
     Dis_Drawing(x/8, y/8, (unsigned char *)buff_part, h, w);
-    #ifdef enablePartialUpdate
-        changed = false;
-        xUpdateMin = LCDWIDTH - 1;
-        xUpdateMax = 0;
-        yUpdateMin = LCDHEIGHT-1;
-        yUpdateMax = 0;
-    #endif
+    changed = false;
+    xUpdateMin = LCDWIDTH - 1;
+    xUpdateMax = 0;
+    yUpdateMin = LCDHEIGHT-1;
+    yUpdateMax = 0;
+#endif
     return true;
 }
 
@@ -424,7 +422,6 @@ NAN_METHOD(EpdLcd::Rect)
             EpdSetPixel(x+w-1, i, obj->color);
         }
         updateBoundingBox(x, y, x+w, y+h);
-        //    LCDdrawrect(x, y, w, h, obj->color);
     }
     return;
 }
