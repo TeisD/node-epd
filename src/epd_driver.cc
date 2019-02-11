@@ -25,7 +25,11 @@
 #define ENTRY_MODE_Y_INCREMENT (1<<1)
 #define ENTRY_MODE_X_INCREMENT (1<<0)
 
+#ifdef EPD02X13
+unsigned char GDOControl[] = {DRIVER_OUTPUT_CMD, (yDot - 1) & 0xFF, ((yDot - 1) >> 8) & 0xFF, 0x00}; //for 2.13inch
+#else
 unsigned char GDOControl[] = {DRIVER_OUTPUT_CMD, (yDot - 1) % 256, (yDot - 1) / 256, 0x00}; //for 1.54inch
+#endif
 unsigned char softstart[] = {BOSTER_SOFT_START_CMD, 0xd7, 0xd6, 0x9d};
 unsigned char VCOMVol[] = {WRITE_VCOM_REGISTER, 0xa8};			 // VCOM 7c
 unsigned char DummyLine[] = {SET_DUMMY_LINE_PERIOD, 0x1a};		 // 4 dummy line per gate
@@ -111,9 +115,9 @@ void EPD_POWERON(void)
 /*******************************************************************************
 function：
 		The first byte is written with the command value
-		Remove the command value, 
-		the address after a shift, 
-		the length of less than one byte	
+		Remove the command value,
+		the address after a shift,
+		the length of less than one byte
 *******************************************************************************/
 void EPD_Write(unsigned char *value, unsigned char datalen)
 {
@@ -134,9 +138,9 @@ void EPD_Write(unsigned char *value, unsigned char datalen)
 }
 /*******************************************************************************
 Function: Write the display buffer
-Parameters: 
-		XSize x the direction of the direction of 128 points, adjusted to an 
-		integer multiple of 8 times YSize y direction quantity Dispbuff displays 
+Parameters:
+		XSize x the direction of the direction of 128 points, adjusted to an
+		integer multiple of 8 times YSize y direction quantity Dispbuff displays
 		the data storage location. The data must be arranged in a correct manner
 ********************************************************************************/
 void EPD_WriteDispRam(unsigned int XSize, unsigned int YSize,
@@ -165,8 +169,8 @@ void EPD_WriteDispRam(unsigned int XSize, unsigned int YSize,
 
 /*******************************************************************************
 Function: Write the display buffer to write a certain area to the same display.
-Parameters: XSize x the direction of the direction of 128 points,adjusted to 
-			an integer multiple of 8 times YSize y direction quantity  Dispdata 
+Parameters: XSize x the direction of the direction of 128 points,adjusted to
+			an integer multiple of 8 times YSize y direction quantity  Dispdata
 			display data.
 ********************************************************************************/
 void EPD_WriteDispRamMono(unsigned char XSize, unsigned int YSize,
@@ -330,7 +334,7 @@ void EPD_Dis_Full(unsigned char *DisBuffer, unsigned char Label)
 }
 
 /********************************************************************************
-parameter: 
+parameter:
 		xStart :   X direction Start coordinates
 		xEnd   :   X direction end coordinates
 		yStart :   Y direction Start coordinates
@@ -406,7 +410,7 @@ void Dis_Clear_part(void)
 }
 
 /********************************************************************************
-parameter: 
+parameter:
 		xStart :   X direction Start coordinates
 		xEnd   :   X direction end coordinates
 		yStart :   Y direction Start coordinates
