@@ -15,7 +15,7 @@
     #define DPI 112 //13064
 #elif  EPD02X13
 	#define LCDWIDTH 250
-	#define LCDHEIGHT 128 // Resolution is 122 x 250
+	#define LCDHEIGHT 122
 	#define DELAYTIME 2000
     #define DPI 131 //14319
 #elif  EPD1X54
